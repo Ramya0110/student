@@ -13,9 +13,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import lombok.Getter;
+
 @Entity
+@Getter
 @Table(name = "subjects")
-public class SubjectModel {
+public class SubjectEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sub_id")
 	@SequenceGenerator(name = "seq_sub_id", initialValue = 1, allocationSize = 1)
@@ -23,8 +26,8 @@ public class SubjectModel {
 	public Long subId;
 
     @ManyToMany
-	@JoinTable(name = "subject_dept", joinColumns = @JoinColumn(name = "sd_sub_id"), inverseJoinColumns = @JoinColumn(name = "sd_dep_id"))
-	public List<DepartmentModel> subDepId;
+	@JoinTable(name = "subject_dept", joinColumns = @JoinColumn(name = "sd_sub_id"), inverseJoinColumns = @JoinColumn(name = "sd_dept_id"))
+	public List<DepartmentEntity> subDeptId;
 
 	@Column(name = "sub_name")
 	public String subName;

@@ -12,9 +12,20 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import lombok.Getter;
+
 @Entity
+@Getter
 @Table(name = "marks", uniqueConstraints = { @UniqueConstraint(name = "uk_marks", columnNames = { "mrk_std_id", "mrk_sub_id" }) })
-public class MarkModel {
+public class MarkEntity {
+	
+	public class A{
+		int a ;
+		
+		void testA(){
+			
+		}
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_mrk_id")
@@ -29,13 +40,17 @@ public class MarkModel {
 //			joinColumns = @JoinColumn(name = "sm_std_id"),
 //			inverseJoinColumns = @JoinColumn(name = "sm_mrk_id")
 //			)
-	public StudentModel mrkStdId;
+	public StudentEntity mrkStdId;
 	
 	@OneToOne
 	@JoinColumn(name = "mrk_sub_id")
-	public SubjectModel mrkSubId;
+	public SubjectEntity mrkSubId;
 
 	@Column(name = "mrk_mark")
 	public Long mrkMark;
+	
+	public static void test(){
+		
+	}
 
 }

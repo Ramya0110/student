@@ -3,10 +3,10 @@ package com.ramya.student.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ramya.student.model.StudentModel;
+import com.ramya.student.model.StudentEntity;
 
 
-public interface StudentRepo extends JpaRepository<StudentModel, Long>{
+public interface StudentRepo extends JpaRepository<StudentEntity, Long>{
 	
 
 }

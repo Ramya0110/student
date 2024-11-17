@@ -1,15 +1,16 @@
 package com.ramya.student.service;
 
-import com.ramya.student.model.StudentModel;
+import com.ramya.student.dto.StudentDTO;
+import com.ramya.student.model.StudentEntity;
 
 
 public interface StudentService {
 	
-	void saveStudent(StudentModel student);
+	void saveStudent(StudentEntity student);
 	
-	StudentModel getStudent(Long id);
+	StudentDTO getStudent(Long id);
 	
-	void updateStudent(StudentModel student);
+	void updateStudent(StudentEntity student);
 	
 	void deleteStudent(Long id);
 

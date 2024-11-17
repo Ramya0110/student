@@ -1,9 +1,13 @@
 package com.ramya.student.service.impl;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ramya.student.model.MarkModel;
+import com.ramya.student.dto.MarksDTO;
+import com.ramya.student.mapper.MarksMapper;
+import com.ramya.student.model.MarkEntity;
 import com.ramya.student.repo.MarkRepo;
 import com.ramya.student.service.MarkService;
 
@@ -13,20 +17,25 @@ public class MarkServiceImpl implements MarkService {
 	@Autowired 
 	MarkRepo markRepo;
 	
+	@Autowired
+	MarksMapper marksMapper;
+	
 	@Override
-	public void saveMark(MarkModel mark) {
+	public void saveMark(MarkEntity mark) {
 		// TODO Auto-generated method stub
 		markRepo.save(mark);
 	}
 	
 	@Override
-	public MarkModel getMark(Long id) {
+	public MarksDTO getMark(Long id) {
 		// TODO Auto-generated method stub
-		return markRepo.findById(id).get();
+		Optional<MarkEntity> marks = markRepo.findById(id);
+		return marks.isEmpty()?null:marksMapper.toDTO(marks.get());
+		
 	}
 	
 	@Override
-	public void updateMark(MarkModel mark) {
+	public void updateMark(MarkEntity mark) {
 		// TODO Auto-generated method stub
 		markRepo.save(mark);
 	}

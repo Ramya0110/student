@@ -1,14 +1,18 @@
 package com.ramya.student.dto;
 
-import com.ramya.student.model.StudentModel;
-import com.ramya.student.model.SubjectModel;
+import com.ramya.student.model.StudentEntity;
+import com.ramya.student.model.SubjectEntity;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter 
+@Setter
+@Builder
 public class MarksDTO {
 	private Long mrkId;
-	private StudentModel mrkStdId;
-	private SubjectModel mrkSubId;
+	private StudentEntity mrkStdId;
+	private SubjectEntity mrkSubId;
 	private Long mrkMark;
 }

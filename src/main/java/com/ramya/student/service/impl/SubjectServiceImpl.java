@@ -1,9 +1,13 @@
 package com.ramya.student.service.impl;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ramya.student.model.SubjectModel;
+import com.ramya.student.dto.SubjectDTO;
+import com.ramya.student.mapper.SubjectMapper;
+import com.ramya.student.model.SubjectEntity;
 import com.ramya.student.repo.SubjectRepo;
 import com.ramya.student.service.SubjectService;
 
@@ -12,21 +16,25 @@ public class SubjectServiceImpl implements SubjectService {
 	@Autowired
 	SubjectRepo subjectRepo;
 	
+	@Autowired
+	SubjectMapper subjectMapper;
+	
 	@Override
-	public SubjectModel getSubject(Long id) {
+	public SubjectDTO getSubject(Long id) {
 		// TODO Auto-generated method stub
-		return subjectRepo.findById(id).get();
+		Optional<SubjectEntity> subject = subjectRepo.findById(id);
+		return subject.isEmpty()?null:subjectMapper.toDTO(subject.get());
 	}
 	
 	@Override
-	public void saveSubject(SubjectModel subject) {
+	public void saveSubject(SubjectEntity subject) {
 		// TODO Auto-generated method stub
 		subjectRepo.save(subject);
 		
 	}
 	
 	@Override
-	public void updateSubject(SubjectModel subject) {
+	public void updateSubject(SubjectEntity subject) {
 		// TODO Auto-generated method stub
 		subjectRepo.save(subject);
 		

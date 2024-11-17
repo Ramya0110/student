@@ -1,9 +1,12 @@
 package com.ramya.student.service.impl;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ramya.student.model.StudentModel;
+import com.ramya.student.dto.StudentDTO;
+import com.ramya.student.mapper.StudentMapper;
+import com.ramya.student.model.StudentEntity;
 import com.ramya.student.repo.StudentRepo;
 import com.ramya.student.service.StudentService;
 
@@ -13,20 +16,24 @@ public class StudentServiceImpl implements StudentService {
 	@Autowired
 	StudentRepo studentRepo;
 	
+	@Autowired
+	StudentMapper studentMapper;
+	
 	@Override
-	public void saveStudent(StudentModel student) {
+	public void saveStudent(StudentEntity student) {
 		studentRepo.save(student);
 		
 	}
 		
 	@Override
-	public StudentModel getStudent(Long id) {
+	public StudentDTO getStudent(Long id) {
 		// TODO read about Optional and make changes in the below line accordingly
-		return studentRepo.findById(id).get();
+		 StudentEntity student = studentRepo.findById(id).get();
+		 return studentMapper.toDTO(student);		 
 	}
 	
 	@Override
-	public void updateStudent(StudentModel student ) {
+	public void updateStudent(StudentEntity student ) {
 		studentRepo.save(student);
 	}
 	

@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,9 +17,15 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.ramya.student.enums.Gender;
+import com.ramya.student.enums.Section;
+
+import lombok.Getter;
+
 @Entity
+@Getter
 @Table(name = "students")
-public class StudentModel {
+public class StudentEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_std_id")
@@ -26,11 +34,12 @@ public class StudentModel {
 	public Long stdId;
 
 	@OneToOne
-	@JoinColumn(name = "std_dep_id")
-	public DepartmentModel stdDepId;
+	@JoinColumn(name = "std_dept_id")
+	public DepartmentEntity stdDeptId;
 
 	@Column(name = "std_section")
-	public String stdSection;
+	@Enumerated(EnumType.STRING)
+	public Section stdSection;
 
 	@Column(name = "std_name")
 	public String stdName;
@@ -39,6 +48,7 @@ public class StudentModel {
 	public Date stdDob;
 
 	@Column(name = "std_gender")
-	public String stdGender;
+	@Enumerated(EnumType.STRING)
+	public Gender stdGender;
 
 }

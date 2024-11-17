@@ -2,8 +2,8 @@ package com.ramya.student.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ramya.student.model.DepartmentModel;
+import com.ramya.student.model.DepartmentEntity;
 
-public interface DepartmentRepo extends JpaRepository<DepartmentModel, Long>{
+public interface DepartmentRepo extends JpaRepository<DepartmentEntity, Long>{
 
 }

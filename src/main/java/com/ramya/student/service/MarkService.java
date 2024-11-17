@@ -1,14 +1,15 @@
 package com.ramya.student.service;
 
-import com.ramya.student.model.MarkModel;
+import com.ramya.student.dto.MarksDTO;
+import com.ramya.student.model.MarkEntity;
 
 public interface MarkService {
 	
-	void saveMark( MarkModel mark);
+	void saveMark( MarkEntity mark);
 	
-	MarkModel getMark(Long id);
+	MarksDTO getMark(Long id);
 	
-	void updateMark(MarkModel mark);
+	void updateMark(MarkEntity mark);
 	
 	void deleteMark(Long id);
 

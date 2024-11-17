@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ramya.student.model.StudentModel;
+import com.ramya.student.dto.StudentDTO;
+import com.ramya.student.model.StudentEntity;
 import com.ramya.student.service.StudentService;
 
 @RestController
@@ -22,28 +23,35 @@ public class StudentController {
 	
 //	TODO study about ResponseEntity
 	@GetMapping("/get/{id}")
-	private ResponseEntity<StudentModel> getStudent(@PathVariable Long id) {
-		ResponseEntity<StudentModel> response = ResponseEntity.status(HttpStatus.OK)
+	private ResponseEntity<StudentDTO> getStudent(@PathVariable Long id) {
+		ResponseEntity<StudentDTO> response = ResponseEntity.status(HttpStatus.OK)
 				.body(studentService.getStudent(id));
 		return response;
 	}
 	
 	@PostMapping("/create")
-	private ResponseEntity<String> createStudent(@RequestBody StudentModel student) {
+	private ResponseEntity<String> createStudent(@RequestBody StudentEntity student) {
 		studentService.saveStudent(student);
-		ResponseEntity<String> response =ResponseEntity.status(HttpStatus.CREATED).body("OK");
+		ResponseEntity<String> response =ResponseEntity.status(HttpStatus.CREATED)
+				.body("Created New Record");
 		return response;
 	}
 	
 	@PutMapping("/update")
-	private void updateStudent(@RequestBody StudentModel student) {
+	private ResponseEntity<String> updateStudent(@RequestBody StudentEntity student) {
 		studentService.updateStudent(student);
+		ResponseEntity<String> response = ResponseEntity.status(HttpStatus.OK)
+				.body("Updated Record");
+		return response;
 		
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	private void deleteStudent(@PathVariable Long id) {
+	private ResponseEntity<String> deleteStudent(@PathVariable Long id) {
 		studentService.deleteStudent(id);
+		ResponseEntity<String> response = ResponseEntity.status(HttpStatus.OK)
+				.body("Deleted Record");
+		return response;
 		
 	}
 

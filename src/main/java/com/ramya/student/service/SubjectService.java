@@ -1,14 +1,15 @@
 package com.ramya.student.service;
 
-import com.ramya.student.model.SubjectModel;
+import com.ramya.student.dto.SubjectDTO;
+import com.ramya.student.model.SubjectEntity;
 
 public interface SubjectService {
 	
-	SubjectModel getSubject(Long id);
+	SubjectDTO getSubject(Long id);
 	
-	void saveSubject(SubjectModel subject);
+	void saveSubject(SubjectEntity subject);
 	
-	void updateSubject(SubjectModel subject);
+	void updateSubject(SubjectEntity subject);
 	
 	void deleteSubject(Long id);
 	
