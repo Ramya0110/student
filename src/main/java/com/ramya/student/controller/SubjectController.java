@@ -3,6 +3,7 @@ package com.ramya.student.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,20 +19,22 @@ import com.ramya.student.service.SubjectService;
 
 @RestController
 @RequestMapping(value="/subject")
+@PreAuthorize("hasAuthority('TEACHER')")
 public class SubjectController {
 	
 	@Autowired
 	private SubjectService subjectService;
 	
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('TEACHER')")
 	@GetMapping("/get/{id}")
-	private ResponseEntity<SubjectDTO> getSubject(@PathVariable Long id) {
+	public ResponseEntity<SubjectDTO> getSubject(@PathVariable Long id) {
 		ResponseEntity<SubjectDTO> response = ResponseEntity.status(HttpStatus.OK)
 				.body(subjectService.getSubject(id));
 		return response;
 	}
-	
+
 	@PostMapping ("/create")
-	private ResponseEntity<String> saveSubject(@RequestBody SubjectEntity subject) {
+	public ResponseEntity<String> saveSubject(@RequestBody SubjectEntity subject) {
 		subjectService.saveSubject(subject);
 		ResponseEntity<String> response = ResponseEntity.status(HttpStatus.CREATED)
 				.body("Created New Record");
@@ -39,7 +42,7 @@ public class SubjectController {
 	}
 	
 	@PutMapping("/update")
-	private ResponseEntity<String> updateSubject(@RequestBody SubjectEntity subject) {
+	public ResponseEntity<String> updateSubject(@RequestBody SubjectEntity subject) {
 		subjectService.updateSubject(subject);
 		ResponseEntity<String> response = ResponseEntity.status(HttpStatus.OK)
 				.body("Updated Record");
@@ -47,7 +50,7 @@ public class SubjectController {
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	private ResponseEntity<String> deleteSubject(@PathVariable Long id) {
+	public ResponseEntity<String> deleteSubject(@PathVariable Long id) {
 		subjectService.deleteSubject(id);
 		ResponseEntity<String> response = ResponseEntity.status(HttpStatus.OK)
 				.body("Deleted Record");

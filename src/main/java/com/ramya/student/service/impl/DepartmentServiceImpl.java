@@ -3,6 +3,7 @@ package com.ramya.student.service.impl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.ramya.student.dto.DepartmentDTO;
 import com.ramya.student.mapper.DepartmentMapper;
@@ -10,7 +11,7 @@ import com.ramya.student.model.DepartmentEntity;
 import com.ramya.student.repo.DepartmentRepo;
 import com.ramya.student.service.DepartmentService;
 
-@Component
+@Service
 public class DepartmentServiceImpl implements DepartmentService{
 	
 	@Autowired

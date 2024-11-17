@@ -3,6 +3,7 @@ package com.ramya.student.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,20 +19,22 @@ import com.ramya.student.service.DepartmentService;
 
 @RestController
 @RequestMapping(value="/department")
+@PreAuthorize("hasAuthority('ADMIN')")
 public class DepartmentController {
 	
 	@Autowired
-	DepartmentService departmentService;
+	private DepartmentService departmentService;
 	
 	@GetMapping("/get/{id}")
-	private ResponseEntity<DepartmentDTO> getDepartment(@PathVariable Long id) {		
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('TEACHER')")
+	public ResponseEntity<DepartmentDTO> getDepartment(@PathVariable Long id) {		
 		ResponseEntity<DepartmentDTO> response = ResponseEntity.status(HttpStatus.OK)
 				.body(departmentService.getDepartment(id));
 		return response;
 	}
 	
 	@PostMapping("/create")
-	private ResponseEntity<String> createDepartment(@RequestBody DepartmentEntity department) {
+	public ResponseEntity<String> createDepartment(@RequestBody DepartmentEntity department) {
 		departmentService.saveDepartment(department);
 		ResponseEntity<String> response = ResponseEntity.status(HttpStatus.CREATED)
 				.body("Created New Record");
@@ -39,7 +42,7 @@ public class DepartmentController {
 	}
 	
 	@PutMapping("/update")
-	private ResponseEntity<String> updateDepartment(@RequestBody DepartmentEntity department) {
+	public ResponseEntity<String> updateDepartment(@RequestBody DepartmentEntity department) {
 		departmentService.saveDepartment(department);
 		ResponseEntity<String> response = ResponseEntity.status(HttpStatus.OK)
 				.body("Updated Record");

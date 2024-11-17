@@ -11,11 +11,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.ramya.student.enums.Department;
+import com.sun.istack.NotNull;
 
 @Entity
-@Table(name = "departments")
+@Table(name = "departments" , uniqueConstraints = {@UniqueConstraint(name="uk_dept_code",columnNames = {"dept_code"})})
 public class DepartmentEntity {
 
 	@Id
@@ -27,5 +29,4 @@ public class DepartmentEntity {
 	@Column(name = "dept_code")
 	@Enumerated(EnumType.ORDINAL)
 	public Department deptCode;
-
 }

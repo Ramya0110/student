@@ -12,6 +12,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import lombok.Getter;
 
@@ -26,7 +27,7 @@ public class SubjectEntity {
 	public Long subId;
 
     @ManyToMany
-	@JoinTable(name = "subject_dept", joinColumns = @JoinColumn(name = "sd_sub_id"), inverseJoinColumns = @JoinColumn(name = "sd_dept_id"))
+	@JoinTable(name = "subject_dept", joinColumns = @JoinColumn(name = "sd_sub_id"), inverseJoinColumns = @JoinColumn(name = "sd_dept_id"),uniqueConstraints = {@UniqueConstraint(columnNames = {"sd_sub_id","sd_dept_id"})})
 	public List<DepartmentEntity> subDeptId;
 
 	@Column(name = "sub_name")

@@ -3,6 +3,7 @@ package com.ramya.student.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,21 +17,22 @@ import com.ramya.student.model.StudentEntity;
 import com.ramya.student.service.StudentService;
 
 @RestController
+@PreAuthorize("hasAuthority('TEACHER')")
 public class StudentController {
 	
 	@Autowired
 	private StudentService studentService;
-	
-//	TODO study about ResponseEntity
+
+	@PreAuthorize("hasAuthority('TEACHER') or hasAuthority('ADMIN') or hasAuthority('STUDENT')")
 	@GetMapping("/get/{id}")
-	private ResponseEntity<StudentDTO> getStudent(@PathVariable Long id) {
+	public ResponseEntity<StudentDTO> getStudent(@PathVariable Long id) {
 		ResponseEntity<StudentDTO> response = ResponseEntity.status(HttpStatus.OK)
 				.body(studentService.getStudent(id));
 		return response;
 	}
 	
 	@PostMapping("/create")
-	private ResponseEntity<String> createStudent(@RequestBody StudentEntity student) {
+	public ResponseEntity<String> createStudent(@RequestBody StudentEntity student) {
 		studentService.saveStudent(student);
 		ResponseEntity<String> response =ResponseEntity.status(HttpStatus.CREATED)
 				.body("Created New Record");
@@ -38,7 +40,7 @@ public class StudentController {
 	}
 	
 	@PutMapping("/update")
-	private ResponseEntity<String> updateStudent(@RequestBody StudentEntity student) {
+	public ResponseEntity<String> updateStudent(@RequestBody StudentEntity student) {
 		studentService.updateStudent(student);
 		ResponseEntity<String> response = ResponseEntity.status(HttpStatus.OK)
 				.body("Updated Record");
@@ -47,7 +49,7 @@ public class StudentController {
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	private ResponseEntity<String> deleteStudent(@PathVariable Long id) {
+	public ResponseEntity<String> deleteStudent(@PathVariable Long id) {
 		studentService.deleteStudent(id);
 		ResponseEntity<String> response = ResponseEntity.status(HttpStatus.OK)
 				.body("Deleted Record");

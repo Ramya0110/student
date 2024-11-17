@@ -19,6 +19,7 @@ import javax.persistence.Table;
 
 import com.ramya.student.enums.Gender;
 import com.ramya.student.enums.Section;
+import com.sun.istack.NotNull;
 
 import lombok.Getter;
 
@@ -35,6 +36,7 @@ public class StudentEntity {
 
 	@OneToOne
 	@JoinColumn(name = "std_dept_id")
+	@NotNull
 	public DepartmentEntity stdDeptId;
 
 	@Column(name = "std_section")

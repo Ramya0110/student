@@ -1,33 +1,34 @@
 package com.ramya.student;
 
-import org.modelmapper.Conditions;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
-import org.modelmapper.convention.NameTokenizers;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.ramya.student.dto.DepartmentDTO;
-import com.ramya.student.dto.MarksDTO;
-import com.ramya.student.model.MarkEntity;
+import com.ramya.student.model.LoginRoleEntity;
+import com.ramya.student.model.LoginUserEntity;
+import com.ramya.student.service.LoginRoleService;
+import com.ramya.student.service.LoginUserService;
 
 @SpringBootApplication
 @EnableJpaRepositories
 public class StudentApplication {
+	
+	@Value("${spring.jpa.hibernate.ddl-auto}")
+	private String hibernateDDLAuto;
+	
 	@Bean
-	 public ModelMapper modelMapper() {
-        ModelMapper mapper = new ModelMapper();
-        mapper
-                .getConfiguration()
-//                .addValueReader(new RecordValueReader())
-                .setSourceNameTokenizer(NameTokenizers.UNDERSCORE)
-                .setSkipNullEnabled(true)
-                .setPropertyCondition(Conditions.isNotNull());
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        return mapper;
-    }
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}	
 
 	public static void main(String[] args) {
 		SpringApplication.run(StudentApplication.class, args);
@@ -45,6 +46,18 @@ public class StudentApplication {
 //			.build();
 		
 		
+		
 	}
-
+	
+	@Bean
+	CommandLineRunner run(LoginRoleService loginRoleService , LoginUserService loginUserService) {
+		return str->{
+			if(hibernateDDLAuto.equals("create")) {
+				LoginRoleEntity adminRole = loginRoleService.saveRole(new LoginRoleEntity(null,"ADMIN"));
+				loginRoleService.saveRole(new LoginRoleEntity(null,"STUDENT"));
+				loginRoleService.saveRole(new LoginRoleEntity(null,"TEACHER"));
+				loginUserService.createUser(new LoginUserEntity(null,"Ramya","abcd","ramya@gmail.com",List.of(adminRole)));
+			}			
+		};
+	}
 }
