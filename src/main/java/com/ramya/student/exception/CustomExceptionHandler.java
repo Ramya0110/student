@@ -5,7 +5,6 @@ import java.util.Date;
 import javax.persistence.EntityNotFoundException;
 
 import org.hibernate.JDBCException;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import oracle.jdbc.OracleDatabaseException;
 
 
 @ControllerAdvice
@@ -36,10 +34,7 @@ public class CustomExceptionHandler {
 	}
 	
 	private String getExceptionType(Exception e) {
-		if(e instanceof OracleDatabaseException) {
-			return "OracleDatabaseException";
-		}
-		else if (e instanceof HttpMessageNotReadableException) {
+		if (e instanceof HttpMessageNotReadableException) {
 			return "HttpMessageNotReadableException";
 		}
 		else if (e instanceof JDBCException) {
