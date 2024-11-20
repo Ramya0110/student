@@ -20,13 +20,14 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import static com.ramya.student.constant.APIConstants.ALLOWED_END_POINTS;
 
 public class AuthorizationFilter extends OncePerRequestFilter {
 	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		if(request.getServletPath().equals("/token")) {
+		if( ALLOWED_END_POINTS.stream().anyMatch(endpoint -> request.getServletPath().startsWith(endpoint))) {
 			filterChain.doFilter(request, response);
 		}
 		else {
