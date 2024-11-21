@@ -18,8 +18,26 @@ import com.ramya.student.model.LoginUserEntity;
 import com.ramya.student.service.LoginRoleService;
 import com.ramya.student.service.LoginUserService;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.annotations.security.SecuritySchemes;
+
 @SpringBootApplication
 @EnableJpaRepositories
+@OpenAPIDefinition(
+			info = @Info(contact = @Contact(name = "Ramya", email = "ramya31.hs@gmail.com"),
+			description = "Swagger for student application",
+			version = "1.0"
+			)
+		)
+@SecuritySchemes(value = {
+		@SecurityScheme(type = SecuritySchemeType.HTTP , bearerFormat = "JWT", name = "Admin", scheme = "bearer"),
+		@SecurityScheme(type = SecuritySchemeType.HTTP , bearerFormat = "JWT", name = "Student", scheme = "bearer"),
+		@SecurityScheme(type = SecuritySchemeType.HTTP , bearerFormat = "JWT", name = "Teacher", scheme = "bearer")
+})
 public class StudentApplication {
 	
 	@Value("${spring.jpa.hibernate.ddl-auto}")

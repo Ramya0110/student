@@ -2,6 +2,7 @@ package com.ramya.student.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -47,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		authenticationFilter.setFilterProcessesUrl("/token");
 		http.csrf().disable();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		http.authorizeRequests().antMatchers("/token").permitAll();		
+		http.authorizeRequests().antMatchers("/token","/swagger-ui/**","/v3/api-docs/**").permitAll();
 		http.authorizeRequests().anyRequest().authenticated();
 		http.addFilter(authenticationFilter);
 		http.addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

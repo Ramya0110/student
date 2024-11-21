@@ -12,6 +12,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -21,10 +22,13 @@ public class CustomExceptionHandler {
 	
 	@Data
 	@AllArgsConstructor
-	class ExceptionResponse{
+	public static class ExceptionResponse{
+		@Schema(example = "Exception")
 		private String type;
+		@Schema(example = "NullPointerException in linenumber:42")
 		private String reason;
-		private Date timestamp;	
+		@Schema(example = "YYYY-MM-DD")
+		private Date timestamp;
 	}
 	
 	@ExceptionHandler
